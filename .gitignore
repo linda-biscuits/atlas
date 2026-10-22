@@ -26,9 +26,18 @@ gdunit4_testadapter_v5/
 gdunit4_testadapter_*/
 addons/gdUnit4/GdUnitRunner.cfg
 
+# GodotEnv Specific 
+
+# Don't version addons, only keep the editor config
+addons/*
+!addons/.editorconfig
+
 # VS Code specific ignores
 .vscode/
 
 # Export outputs
 *.exe
 
+addons/*
+!addons/.editorconfig
+.addons/*
