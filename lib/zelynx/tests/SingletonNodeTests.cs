@@ -41,6 +41,7 @@ public partial class SingletonNodeMock : SingletonNode<SingletonNodeMock>
 public class SingletonNodeTests
 {
     private SingletonNodeMock _mockNode;
+    private Node _scene;
     private const int threads = 32;
 
     [After]
@@ -49,6 +50,18 @@ public class SingletonNodeTests
         _mockNode?._ExitTree();
         _mockNode?.Free();
         _mockNode = null;
+
+        _scene?.Free();
+        _scene = null;
+    }
+
+    [Before]
+    public void Begin()
+    {
+        var runner = ISceneRunner.Load("res://lib/zelynx/tests/SingletonNodeTests.cs");
+
+        runner.SimulateFrames(5); // Prewarm
+        _scene = runner.Scene();
     }
 
     [TestCase]
@@ -57,8 +70,7 @@ public class SingletonNodeTests
     {
         // Generate mock node and simulate it being in the scene tree
         _mockNode = new SingletonNodeMock();
-        _mockNode._EnterTree();
-
+        
         // Prepare a concurrent bag to collect instance values given to multiple threads
         var results = new ConcurrentBag<SingletonNodeMock>();
         using var barrier = new Barrier(threads);
@@ -88,7 +100,7 @@ public class SingletonNodeTests
         await Task.WhenAll(nodes.Select(n => Task.Run(() =>
         {
             barrier.SignalAndWait();
-            n._EnterTree();
+            _scene.AddChild(n);
         })));
 
         // Verify that only one instance was registered as the singleton ref
