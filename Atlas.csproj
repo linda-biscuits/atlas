@@ -40,13 +40,17 @@
     <!-- Add .gdignore to test folder to ignore internal gdUnit4 tests -->
     <Touch Files="addons/gdUnit4/test/.gdignore" AlwaysCreate="true" ContinueOnError="true" />
 
-  
   </Target>
 
     <!-- Exclude the broken internal gdUnit4 plugin tests from being compiled by MSBuild -->
   <ItemGroup>
     <Compile Remove="addons/gdUnit4/test/**/*.cs" />
   </ItemGroup>
+
+    <!-- Drop a .gdignore inside the test adapter directory right after it generates -->
+  <Target Name="HideTestAdapterFromGodot" AfterTargets="Build" Condition="Exists('gdunit4_testadapter_v5/')">
+    <Touch Files="gdunit4_testadapter_v5/.gdignore" AlwaysCreate="true" ContinueOnError="true" />
+  </Target>
 
 
 </Project>
