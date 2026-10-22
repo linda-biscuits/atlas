@@ -19,6 +19,15 @@ export_credentials.cfg
 data_*/
 mono_crash.*.json
 
+# GdUnit4-specific ignores
+.gdunit4/
+reports/
+gdunit4_testadapter_v5/
+gdunit4_testadapter_*/
+
+# VS Code specific ignores
+.vscode/
+
 # Export outputs
 *.exe
 # Uncomment if your project does not version PCK files as runtime dependencies.
