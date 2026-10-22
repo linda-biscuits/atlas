@@ -4,7 +4,7 @@
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
-  
+
   <!-- gdUnit4 package dependencies --> 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0"/>
@@ -17,11 +17,36 @@
   </ItemGroup>
 
   <!-- Automatically restore .NET local tools and install Chickensoft addons before the project builds -->
-  <Target Name="RestoreToolsAndAddons" BeforeTargets="BeforeBuild">
+  <Target Name="RestoreToolsAndAddons" BeforeTargets="BeforeBuild" Condition="!Exists('addons/gdUnit4/')">
+
+    <!-- Clean dirs as godotenv will not replace them -->
+    <Message Text="[Setup] Cleaning local addons directory..." Importance="high" />
+    <RemoveDir Directories="addons/gdUnit4" ContinueOnError="true" />
+    <RemoveDir Directories="addons/imrp" ContinueOnError="true" />
+
     <Message Text="[Setup] Restoring .NET tools via dotnet tool restore..." Importance="high" />
     <Exec Command="dotnet tool restore" ContinueOnError="false" />
 
+    <!-- Suppress CS8669 only for the specific file causing the nullable warning -->
+    <ItemGroup>
+      <Compile Update="addons/gdUnit4/src/dotnet/GdUnit4CSharpApi.cs">
+        <NoWarn>$(NoWarn);CS8669</NoWarn>
+      </Compile>
+    </ItemGroup>
+
     <Message Text="[Setup] Installing project addons via godotenv..." Importance="high" />
     <Exec Command="dotnet tool run godotenv addons install" ContinueOnError="false" />
+
+    <!-- Add .gdignore to test folder to ignore internal gdUnit4 tests -->
+    <Touch Files="addons/gdUnit4/test/.gdignore" AlwaysCreate="true" ContinueOnError="true" />
+
+  
   </Target>
+
+    <!-- Exclude the broken internal gdUnit4 plugin tests from being compiled by MSBuild -->
+  <ItemGroup>
+    <Compile Remove="addons/gdUnit4/test/**/*.cs" />
+  </ItemGroup>
+
+
 </Project>
