@@ -4,14 +4,24 @@
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  
   <!-- gdUnit4 package dependencies --> 
-   <ItemGroup>
-     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0"/>
-     <PackageReference Include="gdUnit4.api" Version="5.1.0-rc1"/>
-     <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
-     <PackageReference Include="gdUnit4.analyzers" Version="1.0.0">
-       <PrivateAssets>none</PrivateAssets>
-       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-     </PackageReference>
-   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0"/>
+    <PackageReference Include="gdUnit4.api" Version="5.1.0-rc1"/>
+    <PackageReference Include="gdUnit4.test.adapter" Version="3.0.0"/>
+    <PackageReference Include="gdUnit4.analyzers" Version="1.0.0">
+      <PrivateAssets>none</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- Automatically restore .NET local tools and install Chickensoft addons before the project builds -->
+  <Target Name="RestoreToolsAndAddons" BeforeTargets="BeforeBuild">
+    <Message Text="[Setup] Restoring .NET tools via dotnet tool restore..." Importance="high" />
+    <Exec Command="dotnet tool restore" ContinueOnError="false" />
+
+    <Message Text="[Setup] Installing project addons via godotenv..." Importance="high" />
+    <Exec Command="dotnet tool run godotenv addons install" ContinueOnError="false" />
+  </Target>
 </Project>
