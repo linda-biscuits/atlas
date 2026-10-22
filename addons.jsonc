@@ -19,7 +19,7 @@
     "gdUnit4": {
       "url": "https://github.com/godot-gdunit-labs/gdUnit4",
       "subfolder": "addons/gdUnit4",
-      "checkout": "V6.2.2"
+      "checkout": "v6.2.2"
     }
   }
 }
