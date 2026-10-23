@@ -2,6 +2,7 @@ using Godot;
 using System;
 
 using Zelynx.Patterns;
+using Zelynx.UI.Windows;
 
 /// <summary>
 /// Only autoload, bootstraps the rest of the application.
@@ -15,13 +16,18 @@ public partial class Bootstrapper : SingletonNode<Bootstrapper>
     }
 
     /// <summary>
-    /// Deferred call to safely add nodes, since we will be adding them to our root node and not oursives/this.
+    /// Deferred call to safely add manipulate the root scene tree
     /// </summary>
     private void Init()
     {
-        GD.Print("Bootstrapper initialized!");
+        // Startup Window Manager
+        var windowManager = new WindowManager();
+        GetTree().Root.AddChild(windowManager);
+
+        var notify = windowManager.CreateWindow(WindowType.Notify);
     }
     
+
     public override void _ExitTree()
     {
         base._ExitTree();

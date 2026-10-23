@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://bujg0kn66fj83"]
+
+[ext_resource type="Script" uid="uid://c1782caxip64j" path="res://lib/zelynx/ui/windows/NotifyWindow.cs" id="1_5k0fx"]
+[ext_resource type="Texture2D" uid="uid://cexxkr3k68m6d" path="res://icon.svg" id="2_adaws"]
+[ext_resource type="PackedScene" uid="uid://conbjldy64f2q" path="res://lib/zelynx/ui/prefabs/TitleBar.tscn" id="2_wfldd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
+bg_color = Color(0.12, 0.12, 0.14, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.25, 0.27, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="BaseWindow" type="PanelContainer" unique_id=1107131954]
+custom_minimum_size = Vector2(350, 150)
+custom_maximum_size = Vector2(350, 150)
+offset_right = 412.0
+offset_bottom = 166.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_window")
+script = ExtResource("1_5k0fx")
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=1775568124]
+layout_mode = 2
+
+[node name="TitleBar" parent="MainLayout" unique_id=491884873 instance=ExtResource("2_wfldd")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ContentArea" type="MarginContainer" parent="MainLayout" unique_id=352234930]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainLayout/ContentArea" unique_id=1318351053]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainLayout/ContentArea/VBoxContainer" unique_id=198814867]
+custom_minimum_size = Vector2(0, 65)
+custom_maximum_size = Vector2(-1, 65)
+clip_contents = true
+layout_mode = 2
+alignment = 1
+
+[node name="texIcon" type="TextureRect" parent="MainLayout/ContentArea/VBoxContainer/HBoxContainer2" unique_id=708341739]
+custom_minimum_size = Vector2(32, 32)
+custom_maximum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+offset_transform_position = Vector2(10, 0)
+texture = ExtResource("2_adaws")
+stretch_mode = 4
+
+[node name="lblMessage" type="Label" parent="MainLayout/ContentArea/VBoxContainer/HBoxContainer2" unique_id=2056382619]
+unique_name_in_owner = true
+custom_maximum_size = Vector2(300, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "This is a base window!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainLayout/ContentArea/VBoxContainer" unique_id=1359239328]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="btnOk" type="Button" parent="MainLayout/ContentArea/VBoxContainer/HBoxContainer" unique_id=29440364]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "OK"
+
+[node name="btnCancel" type="Button" parent="MainLayout/ContentArea/VBoxContainer/HBoxContainer" unique_id=968392369]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Cancel"

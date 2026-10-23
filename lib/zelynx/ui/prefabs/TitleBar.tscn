@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://conbjldy64f2q"]
+
+[ext_resource type="Texture2D" uid="uid://cexxkr3k68m6d" path="res://icon.svg" id="1_2am0l"]
+
+[node name="TitleBar" type="PanelContainer" unique_id=491884873]
+custom_minimum_size = Vector2(0, 32)
+mouse_default_cursor_shape = 13
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1913040391]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=425079317]
+layout_mode = 2
+
+[node name="WindowTitleIcon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=360554868]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+custom_maximum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_2am0l")
+
+[node name="WindowTitle" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1235649571]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+offset_transform_position = Vector2(8, 0)
+text = "BaseWindow"
+vertical_alignment = 1
+justification_flags = 160
+clip_text = true
+
+[node name="CloseButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=815458613]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+text = "×"
