@@ -52,7 +52,7 @@ public partial class Draggable: Node
             return;
         }
 
-        SetProcessInput(false); // We only process input when dragging
+        SetProcessInput(false); // Disable _Input until we know we are dragging
 
         if(DragHandle == null || DragTarget == null)
         {
