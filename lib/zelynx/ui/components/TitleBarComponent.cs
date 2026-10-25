@@ -4,46 +4,65 @@ namespace Zelynx.UI.Components;
 
 public partial class TitleBarComponent : PanelContainer
 {
-        private Label _windowTitleLabel;
-        private TextureRect _windowTitleIcon;
-        private Button _closeButton;
-        private Button _maximizeButton;
-        private Button _minimizeButton;
+    [Export]public Control ParentWindow { get; set; }
+    [Export]public TextureRect Icon;
+    [Export]public string Title = "Untitled";
+    [Export]public bool HasMinimize = false;
+    [Export]public bool HasMaximize = false;
+    [Export]public bool HasClose = false;
 
-        private bool _hasMinimize = false;
-        private bool _hasMaximize = false;
-        private bool _hasClose = false;
+    private Label _windowTitleLabel;
+    private TextureRect _titleIcon;
+    private Button _closeButton;
+    private Button _maximizeButton;
+    private Button _minimizeButton;
 
-        public override void _Ready()
+    public override void _Ready()
+    {
+        _windowTitleLabel = GetNode<Label>("%Title");
+        _titleIcon = GetNode<TextureRect>("%TitleIcon");
+        _minimizeButton = GetNode<Button>("%Minimize");
+        _maximizeButton = GetNode<Button>("%Maximize");
+        _closeButton = GetNode<Button>("%Close");
+    
+
+        if(!string.IsNullOrEmpty(Title))
         {
-            _windowTitleLabel = GetNode<Label>("%Title");
-            _windowTitleIcon = GetNode<TextureRect>("%TitleIcon");
-            _minimizeButton = GetNode<Button>("%Minimize");
-            _maximizeButton = GetNode<Button>("%Maximize");
-            _closeButton = GetNode<Button>("%Close");
-
+            _windowTitleLabel.Text = Title;
         }
 
-        public void Init(string title, Texture2D icon, bool hasMinimize = false, bool hasMaximize = false, bool hasClose = false)
-        {
-            // Populate title
-            _windowTitleLabel.Text = title;
-
-            // Populate icon if provided, otherwise default
-            if(icon != null)
-            { 
-                _windowTitleIcon.Texture = icon;
-            }
-
-            _hasMinimize = hasMinimize;
-            _hasMaximize = hasMaximize;
-            _hasClose = hasClose;
-
-            _closeButton.Visible = _hasClose;
-            _closeButton.Disabled = !_hasClose;
-            _maximizeButton.Visible = _hasMaximize;
-            _maximizeButton.Disabled = !_hasMaximize;
-            _minimizeButton.Visible = _hasMinimize;
-            _minimizeButton.Disabled = !_hasMinimize;
+        // Populate icon if provided, otherwise default
+        if(Icon != null)
+        { 
+            _titleIcon.Texture = Icon.Texture;
         }
+
+        if(ParentWindow == null){ GD.PrintErr("ParentWindow is not assigned."); return; }
+
+        // Configure close
+        _closeButton.Visible = HasClose;
+        _closeButton.Disabled = !HasClose;
+        if (HasClose)
+        {
+            _closeButton.Pressed += () => ParentWindow.Call("Close");
+        }
+
+        // Configure maximize
+        _maximizeButton.Visible = HasMaximize;
+        _maximizeButton.Disabled = !HasMaximize;
+        if (HasMaximize)
+        {
+            _maximizeButton.Pressed += () => ParentWindow.Call("Maximize");
+        }
+
+        // Configure minimize
+        _minimizeButton.Visible = HasMinimize;
+        _minimizeButton.Disabled = !HasMinimize;
+        if (HasMinimize)
+        {
+            _minimizeButton.Pressed += () => ParentWindow.Call("Minimize");
+        }
+
+    }
+
 }

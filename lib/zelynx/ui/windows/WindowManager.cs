@@ -71,4 +71,9 @@ public partial class WindowManager : SingletonNode<WindowManager>
         _activeWindows.Add(windowInstance);
         
     }
+
+    public void UnregisterWindow(Window window)
+    {
+        _activeWindows.Remove(window);
+    }
 }
