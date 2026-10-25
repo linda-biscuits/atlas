@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cexxkr3k68m6d" path="res://icon.svg" id="2_adaws"]
 [ext_resource type="PackedScene" uid="uid://conbjldy64f2q" path="res://lib/zelynx/ui/prefabs/TitleBar.tscn" id="2_wfldd"]
 [ext_resource type="Script" uid="uid://dx53ylp84kr6s" path="res://lib/zelynx/ui/components/Draggable.cs" id="4_8drx5"]
+[ext_resource type="Script" uid="uid://nmmd86u03l3s" path="res://lib/zelynx/ui/components/Resizable.cs" id="5_76qah"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
 bg_color = Color(0.12, 0.12, 0.14, 1)
@@ -19,10 +20,9 @@ corner_radius_bottom_left = 4
 
 [node name="BaseWindow" type="PanelContainer" unique_id=1107131954]
 custom_minimum_size = Vector2(350, 150)
-custom_maximum_size = Vector2(350, 150)
 propagate_maximum_size = false
-offset_right = 1803.0
-offset_bottom = 947.0
+offset_right = 350.0
+offset_bottom = 160.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_window")
 script = ExtResource("1_5k0fx")
 
@@ -96,3 +96,8 @@ script = ExtResource("4_8drx5")
 DragHandle = NodePath("../MainLayout/TitleBar")
 DragTarget = NodePath("..")
 metadata/_custom_type_script = "uid://dx53ylp84kr6s"
+
+[node name="Resizable" type="Node" parent="." unique_id=1131217787 node_paths=PackedStringArray("ResizeTarget")]
+script = ExtResource("5_76qah")
+ResizeTarget = NodePath("..")
+metadata/_custom_type_script = "uid://nmmd86u03l3s"
